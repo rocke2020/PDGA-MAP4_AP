@@ -294,7 +294,7 @@ def mutate_t(gen, mut_rate):
     return gen_tmp
 
 
-def mutate_methylation(gen, mut_rate):
+def mutate_methylation(gen:list[str], mut_rate):
     gen_tmp = []      
     seqs_methylate = np.random.choice(gen, int(round(len(gen) * mut_rate, 0)), replace=False)
     for seq in gen:
@@ -404,12 +404,11 @@ cyclic_mutations = {
     }
 
 
-def mutate(gen, cyclic, mut_rate=1, b_insert_rate=0.1, methyl=False):
+def mutate(gen:list[str], cyclic, mut_rate=1, b_insert_rate=0.1, methyl=False):
     """Mutates the given generation 
 
     Arguments:
         gen {list} -- sequences
-
 
     Returns:
         [list] -- mutated generation

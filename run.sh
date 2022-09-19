@@ -1,0 +1,1 @@
+nohup python run.py > log0.log 2>&1 &

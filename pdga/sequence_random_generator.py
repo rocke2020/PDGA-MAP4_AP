@@ -4,10 +4,10 @@ from . import sequence
 class SequenceGenerator:
     def __init__(self, verbose=False):
             # variables for random generation of dendrimers
-            self.AA4rndm = ['O', 'Z', 'R', 'H', 'K', 'E', 'S', 'T', 'N', 'Q', 'G', 'P', 'A', 'V', 'I', 'L', 'F', 'Y', 'W', 'C', 'D',
-                    'M',
-                    '!', '?', '=', '%', '$', '@', '#', '', '', '', '', '', '', '',
-                    '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+            self.AA4rndm = ['O', 'Z', 'R', 'H', 'K', 'E', 'S', 'T', 'N', 'Q', 'G', 'P', 'A', 'V', 'I', 'L', 'F', 'Y', 
+                'W', 'C', 'D', 'M',
+                '!', '?', '=', '%', '$', '@', '#', '', '', '', '', '', '', '',
+                '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
             self.B4rndm = ['1', '2', '3', '4', '']
             self.CTrndm = ['+', '']
             self.NTrndm = ['&', '']

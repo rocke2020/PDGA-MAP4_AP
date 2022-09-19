@@ -230,26 +230,31 @@ def remove_duplicates(gen):
     return gen_u
 
 
+def get_mid_index(s:str):
+    mid = round(len(s) / 2, 0) 
+    left = mid - 1
+    right = right + 1
+    return left, right
+
+
 def mating(parents):
     """splits the parents in half and join them giving a child
-
     Arguments:
         parents {list of strings} -- parents
 
     Returns:
         string -- child
     """
-
     parent1 = parents[0]
     parent2 = parents[1]
-    half1 = parent1[:random.randint(int(round(len(parent1) / 2, 0)) - 1, int(round(len(parent1) / 2, 0)) + 1)]
-    half2 = parent2[random.randint(int(round(len(parent2) / 2, 0)) - 1, int(round(len(parent2) / 2, 0)) + 1):]
+    parent1_mid_left, partent1_mid_right = get_mid_index(parent1)
+    half1 = parent1[:random.randint(parent1_mid_left, partent1_mid_right)]
+    parent2_mid_left, partent2_mid_right = get_mid_index(parent2)
+    half2 = parent2[random.randint(parent2_mid_left, partent2_mid_right):]
     child = half1 + half2
-
     child = sequence.sanitize_sequence(child)
 
     return child
-
 
 
 def set_seed(seed):
@@ -266,7 +271,6 @@ def set_seed(seed):
 def print_time(time):
     """print running time
     """
-
     hours, rem = divmod(time, 3600)
     minutes, seconds = divmod(rem, 60)
     print('Time {:0>2}:{:0>2}:{:0>2}'.format(int(hours), int(minutes), int(seconds)))
@@ -274,21 +278,20 @@ def print_time(time):
 
 def write_progress(path, dist_dict, gen_n, jd_av, jd_min ):
     """add gen number, gen sequences and its jd av and min
-    
+    TODO puts distance ahead of generated seqs to fastly know the change of ditance during each epoch.
     """
-
     gen_temp = []
     gen = list(dist_dict.keys())
     for seq in gen:
         gen_temp.append(sequence.reinterprete(seq))
-    gen = ';'.join(map(str, gen_temp))
+    gen = ';'.join(gen_temp)
     with open(path , 'a') as outFile:
         outFile.write(str(gen_n) + ' ' + gen + ' ' + str(jd_av) + ' ' + str(jd_min) + '\n')
+
 
 def write_results(path, smiles, seq, map4, jd):
     """if jd from query is smaller than similarity treshold
         (class variable), adds seq to results
-    
     """
     with open(path, 'a') as outFile:
         outFile.write(smiles + ' ' + sequence.reinterprete(seq) + ' ' + str(round(jd,3)) + '\n')
@@ -383,3 +386,4 @@ def connect_mol(mol1, mol2, metbond):
 def random_subset(stuff, n, seed=None):
     rng = np.random.default_rng(seed=seed)
     return rng.choice(stuff, n, replace=False)
+    

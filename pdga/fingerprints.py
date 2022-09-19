@@ -20,7 +20,7 @@ def minhash_map4_distance(a, b):
 
 
 class get_map4_fingerprintfn:
-    def __init__(self,dimensions=1024, return_strings=True, radius=1):
+    def __init__(self, dimensions=1024, return_strings=True, radius=1):
         self.MAP4 = MAP4Calculator(dimensions=dimensions, return_strings=return_strings, radius=radius)
         self.dimensions = dimensions
         self.return_strings = return_strings

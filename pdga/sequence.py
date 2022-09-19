@@ -3,12 +3,13 @@ from rdkit.Chem import rdmolfiles
 from . import utils
 import random 
 
-
+# len 8
 B_SMILES = {'1': '[N:2][C@@H](C[N:2])[C:1](O)=O', '2': '[N:2][C@@H](CC[N:2])[C:1](O)=O',
             '3': '[N:2][C@@H](CCC[N:2])[C:1](O)=O', '4': '[N:2][C@@H](CCCC[N:2])[C:1](O)=O',
             '5': '[N:2][C@H](C[N:2])[C:1](O)=O', '6': '[N:2][C@H](CC[N:2])[C:1](O)=O',
             '7': '[N:2][C@H](CCC[N:2])[C:1](O)=O', '8': '[N:2][C@H](CCCC[N:2])[C:1](O)=O'}
 
+# len 55
 AA_SMILES = {'A': '[N:2][C@@H](C)[C:1](O)=O', 'R': '[N:2][C@@H](CCCNC(N)=N)[C:1](O)=O',
                 'N': '[N:2][C@@H](CC(N)=O)[C:1](O)=O', 'D': '[N:2][C@@H](CC(O)=O)[C:1](O)=O',
                 'C': '[N:2][C@@H](CS)[C:1](O)=O', 'Q': '[N:2][C@@H](CCC(N)=O)[C:1](O)=O',
@@ -70,6 +71,7 @@ interprete_rev_dict = {v: k for k, v in interprete_dict.items()}
 T_SMILES = {'+': '[N:2]'}
 C_SMILES = {'&': 'C[C:1](=O)'}
 
+
 def is_cyclic(seq):
     if "X" in seq:
         return True
@@ -108,6 +110,7 @@ def linearize(seq):
     else:
         return seq
 
+
 def is_empty(seq):
     if len(seq) == 0:
         return True
@@ -116,23 +119,28 @@ def is_empty(seq):
     else:
         False
 
+
 def remove_constrained_activated_cystein_1(seq):
     seq = seq.replace("ÄÄ", '')
     return seq
+
 
 def remove_constrained_activated_cystein_2(seq):
     seq = seq.replace("ÖÖ", '')
     return seq
     
+
 def remove_constrained_activated_cystein_3(seq):
     seq = seq.replace("ÜÜ", '')
     return seq
     
+
 def remove_constrained_activated_cystein(seq):
     seq = remove_constrained_activated_cystein_1(seq)
     seq = remove_constrained_activated_cystein_2(seq)
     seq = remove_constrained_activated_cystein_3(seq)
     return seq
+
 
 def ensure_one_NT_at_beginning(seq):
     for i in NT:
@@ -143,6 +151,7 @@ def ensure_one_NT_at_beginning(seq):
             else:
                 seq = seq.replace(i,'')
     return seq 
+
 
 def ensure_one_CT_at_end(seq):
     for i in CT:
@@ -161,8 +170,9 @@ def sanitize_C_and_N_Term(seq):
             seq = seq.replace(i, '')
         for i in CT:
             seq = seq.replace(i, '')
-    seq = ensure_one_CT_at_end(seq)
-    seq = ensure_one_NT_at_beginning(seq)
+    else:
+        seq = ensure_one_CT_at_end(seq)
+        seq = ensure_one_NT_at_beginning(seq)
     return seq
 
 
@@ -174,7 +184,6 @@ def sanitize_methylation(seq):
     seq = remove_methylation_before_proline(seq)
     seq = remove_methylation_at_end_and_begining(seq)
     return seq
-
 
 
 def sanitize_sequence(seq):
@@ -222,7 +231,6 @@ def reinterprete(seq):
     return seq
 
 
-
 def split_seq_components(seq):
     """split seq in generations and branching units
 
@@ -232,19 +240,17 @@ def split_seq_components(seq):
     Returns:
         lists -- generations(gs, from 0 to..), branching units, terminal and capping
     """
-
     g = []
     gs = []
     bs = []
-    t = []
-    c = []
-
+    c_terminal = []
+    n_terminal = []
     for ix, i in enumerate(seq):
         if i not in ['1', '2', '3', '4', '5', '6', '7', '8']:
             if i in CT:
-                t.append(i)
+                c_terminal.append(i)
             elif i in NT:
-                c.append(i)
+                n_terminal.append(i)
             elif i == 'X':
                 continue
             elif i == '-':
@@ -262,9 +268,7 @@ def split_seq_components(seq):
     gs = gs[::-1]
     bs = bs[::-1]
 
-    return gs, bs, t, c
-
-
+    return gs, bs, c_terminal, n_terminal
 
 
 def find_aa_b_pos(seq):
@@ -387,6 +391,7 @@ def methylate(seq):
         seq = new_seq
     return seq
 
+
 def demethylate(seq):
     if '-' in seq:
         pos = find_methylation_in_seq(seq)
@@ -405,17 +410,15 @@ def smiles_from_seq(seq, cyclize):
     Returns:
         string -- molecule_smile - SMILES of the peptide
     """
-
     #seq = seq.replace("-z","z").replace("-Z","Z").replace("-p","p").replace("-P","P")
-
-    gs, bs, terminal, capping = split_seq_components(seq)
-
+    gs, bs, c_terminal, n_terminal = split_seq_components(seq)
     # modifies the Cterminal
-    if terminal:
-        molecule = rdmolfiles.MolFromSmiles(T_SMILES[terminal[0]])
+    if c_terminal:
+        # C terminal has extra modification to replace OH with NH2.
+        molecule = rdmolfiles.MolFromSmiles(T_SMILES[c_terminal[0]])
     else:
+        # C terminal has no extra modification.
         molecule = ''
-
 
     if cyclize and bs:
         print('dendrimer, cyclization not possible, branching unit will not be considered')
@@ -469,8 +472,8 @@ def smiles_from_seq(seq, cyclize):
         smiles = ''
         return smiles, seq
     
-    if capping:
-        molecule = utils.attach_capping(molecule, rdmolfiles.MolFromSmiles(C_SMILES[capping[0]]))
+    if n_terminal:
+        molecule = utils.attach_capping(molecule, rdmolfiles.MolFromSmiles(C_SMILES[n_terminal[0]]))
 
     if cyclize:
         if is_cyclic(seq):
