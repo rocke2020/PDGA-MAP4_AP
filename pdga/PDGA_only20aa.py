@@ -6,7 +6,7 @@ from pathlib import Path
 from . import mutations
 from . import sequence
 from . import utils
-from .sequence_random_generator import SequenceGenerator
+from .sequence_random_generator_only20aa import SequenceGenerator
 from util.log_util import get_logger
 import logging
 
@@ -16,13 +16,14 @@ logger = get_logger(name=__name__, log_file='run.log', log_level=logging.DEBUG)
 
 class PDGA:
     def __init__(self, pop_size, mut_rate, gen_gap, query, sim_treshold, porpouse, folder, 
-         fingerprintfn, distancefn, query_name, similar_num, is_peptide_sequence=True, methyl=False, 
+         fingerprintfn, distancefn, query_name, peptied_num, similar_num, is_peptide_sequence=True, methyl=False, 
          verbose=False, seed=None):
         self.pop_size = pop_size
         self.mut_rate = mut_rate
         self.gen_gap = gen_gap
         self.porpouse = porpouse
         self.similar_num = similar_num
+        self.peptied_num = peptied_num
 
         if not os.path.exists(folder):
             os.makedirs(folder)
@@ -50,7 +51,8 @@ class PDGA:
         self.selec_strategy = 'Elitist'
         self.rndm_newgen_fract = 0.1
 
-        self.generation_num = 0
+        self.epoch = 0
+        self.log_internal = 50
 
         self.sequence_rng = SequenceGenerator()
         if self.porpouse == 'linear' or self.porpouse == 'cyclic':
@@ -216,9 +218,7 @@ class PDGA:
 
         while len(new_gen) < n * mating_fraction:
             parents = self.pick_parents(surv_dict)
-            child = utils.mating(parents)
-            if self.porpouse == 'cyclic':
-                child = sequence.remove_SS_cyclization(child)
+            child = utils.mating(parents, with_sanitize=False)
             new_gen.append(child)
 
         # if mating fraction is less than 1.0 we fill up the gen with survivors
@@ -267,17 +267,10 @@ class PDGA:
     def run(self):
         """Performs the genetic algorithm
         """
-        log_time_interval = 600
         startTime = time.time()
         found_identity = 0 
         # generation 0:
         gen = self.rndm_gen()
-
-        if self.porpouse == 'cyclic':
-            gen_cy = mutations.mutate(gen, cyclic=self.porpouse == 'cyclic',mut_rate=self.mut_n, methyl=self._methyl)
-            gen = gen_cy
-        if self.verbose:
-            print('Generation', self.generation_num)
 
         # fitness function and survival probability attribution:
         distance_av, distance_min, dist_dict, surv_dict = self.fitness_function(gen, cached_dist_to_skip_calculation=None)
@@ -288,12 +281,9 @@ class PDGA:
         # progress file update (generations and their 
         # average and minimum distance from query): 
         
-        utils.write_progress(self.output_path, dist_dict, self.generation_num, distance_av, distance_min)
+        utils.write_progress(self.output_path, dist_dict, self.epoch, distance_av, distance_min)
 
         time_passed = int(time.time() - startTime)
-
-        if self.verbose:
-            utils.print_time(time_passed)
 
         # if query is found updates found identity count:
         
@@ -301,29 +291,22 @@ class PDGA:
             found_identity += 1
 
             # updates generation number:
-        self.generation_num += 1
+        self.epoch += 1
 
         # default: GA runs for ten more generation after the query is found.
         # while distance_min != 0 or found_identity <= 10:
         while 1:
-
             # if self.timelimit_seconds is not None and time_passed > self.timelimit_seconds:
             #     if self.verbose:
             #         print('time limit reached')
             #     break
-
-            if self.verbose:
-                print('Generation', self.generation_num)
 
             # the sequences to be kept intact are chosen:
             survivors = self.who_lives(surv_dict)
 
             # n. (pop size - len(survivors)) sequences 
             # are created with crossover or mutation (cyclic):
-            if self.porpouse == 'cyclic':
-                new_gen = self.make_new_gen(self.pop_size - len(survivors), surv_dict, mating_fraction=0.5, mutate=True)
-            else:
-                new_gen = self.make_new_gen(self.pop_size - len(survivors), surv_dict, mating_fraction=1.0, mutate=False)
+            new_gen = self.make_new_gen(self.pop_size - len(survivors), surv_dict, mating_fraction=1.0, mutate=False)
 
             # the next generation is the results of merging 
             # the survivors with the new sequences:
@@ -344,22 +327,22 @@ class PDGA:
 
             # progress file update (generations and their 
             # average and minimum distance from query): 
-            utils.write_progress(self.output_path, dist_dict, self.generation_num, distance_av, distance_min)
+            utils.write_progress(self.output_path, dist_dict, self.epoch, distance_av, distance_min)
 
             time_passed = int(time.time() - startTime)
 
-            if self.verbose:
-                utils.print_time(time_passed)
-            
             # updates generation number (class variable):
-            self.generation_num += 1
+            self.epoch += 1
 
             similar_num = self.get_similar_count()
-            if time_passed % log_time_interval == 0:
-                logger.info(f'similar_num {similar_num} at generation_num {self.generation_num}')
+            if self.epoch % self.log_internal == 0:
+                logger.info(f'peptied_num {self.peptied_num} similar_num {similar_num} at epoch {self.epoch}')
+                used_time = utils.convert_time(time_passed)
+                logger.info(f'peptied_num {self.peptied_num} used_time {used_time}')
+
             if similar_num >= self.similar_num:
                 logger.info(
-                    f'similar_num {similar_num} >= target {self.similar_num} at generation_num {self.generation_num}')
+                    f'peptied_num {self.peptied_num} sim_num {similar_num} finishes at epoch {self.epoch}')
                 return
 
             # if query is found updates found identity count (class variable) 

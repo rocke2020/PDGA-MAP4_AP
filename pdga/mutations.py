@@ -1,6 +1,6 @@
-from typing import Sequence
 from . import sequence
 import numpy as np 
+from util.peptide_util import basic_aminoacids
 
 
 def delete(seq, mut_n=1):
@@ -47,6 +47,8 @@ def insert(seq, type_insert, mut_n=1):
                 new_element = np.random.choice(sequence.AA, 1)
             elif type_insert == 'b':
                 new_element = np.random.choice(sequence.B, 1)
+            elif type_insert == 'only_aa':
+                new_element = np.random.choice(basic_aminoacids, 1)
             else:
                 raise ValueError("not valid type, type has to be \"aa\" or \"b\"")
 
@@ -57,7 +59,7 @@ def insert(seq, type_insert, mut_n=1):
 
         return mutations
 
-def mutate_aa(seq, mut_n=1):
+def mutate_aa(seq, mut_n=1, only_aa=False):
     """Performs n (mut_n, class variable) random point mutation
 
     Arguments:
@@ -74,7 +76,10 @@ def mutate_aa(seq, mut_n=1):
             continue
         seq1 = seq[:aa_pos]
         seq2 = seq[aa_pos + 1:]
-        aa_new = np.random.choice(sequence.AA, 1)
+        if only_aa:
+            aa_new = np.random.choice(basic_aminoacids, 1)
+        else:
+            aa_new = np.random.choice(sequence.AA, 1)
         seq = seq1 + aa_new[0] + seq2
         mutations.append(seq)
 
@@ -174,6 +179,23 @@ def mutation_insertion_aa(gen, mut_rate):
     return gen_tmp
 
 
+def mutation_insertion_only_aa(gen, mut_rate):
+    gen_tmp = []
+    seq_insertion_aa = np.random.choice(gen, int(round(len(gen) * mut_rate, 0)), replace=False)
+    for seq in gen: 
+        if seq in seq_insertion_aa:
+            aa_pos, b_pos, met_pos, all_pos = sequence.find_aa_b_pos(seq)
+            if all_pos:
+                seq_insert = insert(seq, 'only_aa')
+                for s in seq_insert:
+                    gen_tmp.append(s)
+            else:
+                gen_tmp.append(seq)
+        else:
+            gen_tmp.append(seq)
+    return gen_tmp
+
+
 
 def mutation_insertion_branch(gen, b_insert_rate):
     gen_tmp = []
@@ -209,6 +231,23 @@ def mutation_mutate_aa(gen, mut_rate):
         else:
             gen_tmp.append(seq)
     return gen_tmp
+
+def mutation_mutate_only_aa(gen, mut_rate):
+    gen_tmp = []      
+    seqs_mutate_aa = np.random.choice(gen, int(round(len(gen) * mut_rate, 0)), replace=False)
+    for seq in gen:
+        if seq in seqs_mutate_aa:
+            aa_pos, b_pos, met_pos, all_pos = sequence.find_aa_b_pos(seq)
+            if aa_pos:
+                seq_mutate = mutate_aa(seq, only_aa=True)
+                for s in seq_mutate:
+                    gen_tmp.append(s)
+            else:
+                gen_tmp.append(seq)
+        else:
+            gen_tmp.append(seq)
+    return gen_tmp
+
 
 def mutate_move_branch(gen, mut_rate, position):
     gen_tmp = []      
@@ -372,7 +411,11 @@ def mutate_head_tail_ss(gen, mut_rate):
     return gen_tmp
 
 
-
+linear_only_aa_mutations = { 
+    "deletion": mutation_deletion,
+    "insertion_aa" : mutation_insertion_only_aa,
+    "mutation_aa": mutation_mutate_only_aa,
+    }
 
 linear_mutations = { 
     "deletion": mutation_deletion,
@@ -437,6 +480,30 @@ def mutate(gen:list[str], cyclic, mut_rate=1, b_insert_rate=0.1, methyl=False):
 
     for seq in gen_tmp:
         seq = sequence.sanitize_sequence(seq)
+        if not sequence.is_empty(seq):
+            gen_new.append(seq)
+
+    return gen_new
+
+
+def mutate_only20aa(gen:list[str], mut_rate=0.5):
+    """Mutates the given generation 
+
+    Arguments:
+        gen {list} -- sequences
+
+    Returns:
+        [list] -- mutated generation
+    """
+    gen_tmp = []
+    for mutation in np.random.choice(list(linear_only_aa_mutations.keys()), 1, replace=False):
+        gen_tmp.extend(linear_only_aa_mutations[mutation](gen, mut_rate))
+
+    if gen_tmp == []:
+        gen_tmp = gen
+    gen_new = []
+
+    for seq in gen_tmp:
         if not sequence.is_empty(seq):
             gen_new.append(seq)
 

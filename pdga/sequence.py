@@ -1,4 +1,3 @@
-from numpy.core.fromnumeric import squeeze
 from rdkit.Chem import rdmolfiles
 from . import utils
 import random 
@@ -212,6 +211,7 @@ def interprete(seq):
         new_seq += interprete_dict[bb]
     seq = new_seq
     return seq
+
 
 def reinterprete(seq):
     """translates one symbol to three letters code

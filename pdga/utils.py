@@ -233,11 +233,11 @@ def remove_duplicates(gen):
 def get_mid_index(s:str):
     mid = round(len(s) / 2, 0) 
     left = mid - 1
-    right = right + 1
+    right = mid + 1
     return left, right
 
 
-def mating(parents):
+def mating(parents, with_sanitize=True):
     """splits the parents in half and join them giving a child
     Arguments:
         parents {list of strings} -- parents
@@ -252,7 +252,8 @@ def mating(parents):
     parent2_mid_left, partent2_mid_right = get_mid_index(parent2)
     half2 = parent2[random.randint(parent2_mid_left, partent2_mid_right):]
     child = half1 + half2
-    child = sequence.sanitize_sequence(child)
+    if with_sanitize:
+        child = sequence.sanitize_sequence(child)
 
     return child
 
@@ -274,6 +275,13 @@ def print_time(time):
     hours, rem = divmod(time, 3600)
     minutes, seconds = divmod(rem, 60)
     print('Time {:0>2}:{:0>2}:{:0>2}'.format(int(hours), int(minutes), int(seconds)))
+
+def convert_time(time):
+    """print running time
+    """
+    hours, rem = divmod(time, 3600)
+    minutes, seconds = divmod(rem, 60)
+    return ('Time {:0>2}:{:0>2}:{:0>2}'.format(int(hours), int(minutes), int(seconds)))
 
 
 def write_progress(path, dist_dict, gen_n, jd_av, jd_min ):
