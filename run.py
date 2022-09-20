@@ -30,7 +30,7 @@ def run_one_peptide(peptied_num=0):
     query_name = f'anti_inflammation_{peptied_num}'        
     # if you want to avoid the possibility of metylation of the amide bond set methyl to False
     ga = PDGA(pop_size=200, mut_rate=0.5, gen_gap=0.5, query=query, sim_treshold=0.6, 
-                porpouse="linear", folder=f"results/{query_name}_seed{seed}", fingerprintfn=fingerprintfn, 
+                porpouse="linear", folder=f"results/anti_inflammation/{query_name}_seed{seed}", fingerprintfn=fingerprintfn, 
                 distancefn=distancefn, 
                 query_name=query_name, peptied_num=peptied_num, similar_num = current_similar_num, 
                 is_peptide_sequence=True, methyl=True, 

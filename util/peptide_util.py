@@ -44,6 +44,29 @@ basic_aa_1chars_to_3chars = {
     "W": "Trp",
     "Y": "Tyr"
 }
+basic_aa_3chars_to_1chars = {
+    "Ala": "A",
+    "Cys": "C",
+    "Asp": "D",
+    "Glu": "E",
+    "Phe": "F",
+    "Gly": "G",
+    "His": "H",
+    "Ile": "I",
+    "Leu": "L",
+    "Met": "M",
+    "Asn": "N",
+    "Pro": "P",
+    "Lys": "K",
+    "Gln": "Q",
+    "Arg": "R",
+    "Ser": "S",
+    "Thr": "T",
+    "Val": "V",
+    "Trp": "W",
+    "Tyr": "Y"
+}
+
 
 often_AMP_aminoacids = basic_aminoacids.copy()
 # Non-containing methionine sequences were preferred. Methionine，简写M，Met, 甲硫氨酸, for diversity, not used in codes.
@@ -150,10 +173,8 @@ def is_valid_terminus(n_name, c_name):
 
 
 if __name__ == "__main__":
-    basic_aa_1chars_to_3chars = {}
-    for aa in basic_aminoacids:
-        for chars, single_char in multi_chars_to_single_char_dict.items():
-            if single_char == aa:
-                basic_aa_1chars_to_3chars[aa] = chars
+    basic_aa_3chars_to_1chars = {}
+    for k, v in basic_aa_1chars_to_3chars.items():
+            basic_aa_3chars_to_1chars[v] = k
     with open('1.json', 'w', encoding='utf-8') as f:
-        json.dump(basic_aa_1chars_to_3chars, f, ensure_ascii=False, indent=4)
+        json.dump(basic_aa_3chars_to_1chars, f, ensure_ascii=False, indent=4)
