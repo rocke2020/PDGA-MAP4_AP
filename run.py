@@ -5,13 +5,13 @@ import numpy as np
 from util.log_util import logger
 from multiprocessing import Pool
 
-seed = 1
+seed = 0
 query_sequences_file = 'projects/wound_heal/orig_data/orig_seq_3char.json'
 with open(query_sequences_file, 'r', encoding='utf-8') as f:
     query_sequences = json.load(f)
 
 
-total_similar_num = 500_000
+total_similar_num = 1000_000
 current_similar_num = total_similar_num // len(query_sequences) + 1
 logger.info(f'current_similar_num {current_similar_num}')
 # query_smiles = "C[C@H]1CCC[C@@H]2[C@H](CC(/C(C)=C/C3=CSC(C)=N3)OC(C[C@H](O)C(C)(C)C([C@H](C)[C@H]1O)=O)=O)O2"

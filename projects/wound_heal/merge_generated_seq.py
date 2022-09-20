@@ -9,7 +9,8 @@ sys.path.append(os.path.abspath('.'))
 from util.peptide_util import basic_aa_3chars_to_1chars
 
 result_dir = Path('results/anti_inflammation_v0.1')
-seed = 1
+result_dir = Path('results/anti_inflammation')
+seed = 0
 out_dir = Path('/mnt/sda/bio_drug_corpus/AIpep/anti_inflammation/ga_outputs')
 out_file = f'/mnt/sda/bio_drug_corpus/AIpep/anti_inflammation/ga_outputs/merged_result_seed{seed}.json'
 
@@ -33,7 +34,7 @@ def merge_and_copy():
     with open(out_file, 'w', encoding='utf-8') as f:
         json.dump(sequences, f, ensure_ascii=False, indent=4)
                 
-    shutil.copyfile('results/anti_inflammation_v0.1/anti_inflammation_0_seed1/param.txt', out_dir / f'param_seed{seed}.txt')
+    shutil.copyfile(result_dir / f'anti_inflammation_0_seed{seed}/param.txt', out_dir / f'param_seed{seed}.txt')
             
 
 
