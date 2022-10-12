@@ -6,7 +6,7 @@ import json
 import os, sys, shutil
 import os, sys
 sys.path.append(os.path.abspath('.'))
-from util.peptide_util import basic_aa_3chars_to_1chars
+from utils.peptide_util import basic_aa_3chars_to_1chars
 
 result_dir = Path('results/anti_inflammation_v0.1')
 result_dir = Path('results/anti_inflammation')

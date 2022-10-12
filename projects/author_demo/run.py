@@ -2,7 +2,7 @@ from pdga import PDGA
 from pdga import get_map4_distancefn, get_map4_fingerprintfn, get_ap_distancefn, get_ap_fingerprintfn
 import sys
 import numpy as np
-from util.log_util import logger
+from utils.log_util import logger
 
 
 if __name__ == "__main__":

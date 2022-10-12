@@ -4,7 +4,7 @@ import pickle
 import json
 import os, sys, shutil
 sys.path.append(os.path.abspath('.'))
-from util.peptide_util import basic_aa_1chars_to_3chars
+from utils.peptide_util import basic_aa_1chars_to_3chars
 
 
 file = '/home/qcdong/codes/MultiPep/APD3_data/woundheal.txt'
