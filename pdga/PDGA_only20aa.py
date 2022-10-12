@@ -7,7 +7,7 @@ from . import mutations
 from . import sequence
 from . import utils
 from .sequence_random_generator_only20aa import SequenceGenerator
-from util.log_util import get_logger
+from utils.log_util import get_logger
 import logging
 
 

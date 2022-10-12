@@ -1,5 +1,5 @@
 import random 
-from util.peptide_util import basic_aminoacids
+from utils.peptide_util import basic_aminoacids
 
 class SequenceGenerator:
     def __init__(self, verbose=False):
