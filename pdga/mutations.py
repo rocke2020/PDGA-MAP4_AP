@@ -1,6 +1,6 @@
 from . import sequence
 import numpy as np 
-from util.peptide_util import basic_aminoacids
+from utils.peptide_util import basic_aminoacids
 
 
 def delete(seq, mut_n=1):

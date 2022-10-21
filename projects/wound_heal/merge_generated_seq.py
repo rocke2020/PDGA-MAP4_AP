@@ -8,11 +8,13 @@ import os, sys
 sys.path.append(os.path.abspath('.'))
 from utils.peptide_util import basic_aa_3chars_to_1chars
 
-result_dir = Path('results/anti_inflammation_v0.1')
-result_dir = Path('results/anti_inflammation')
+
+task_name = 'wound_heal'  # anti_inflammation wound_heal
+result_dir = Path(f'results/{task_name}_v0.1')
+result_dir = Path(f'results/{task_name}')
 seed = 0
-out_dir = Path('/mnt/sda/bio_drug_corpus/AIpep/anti_inflammation/ga_outputs')
-out_file = f'/mnt/sda/bio_drug_corpus/AIpep/anti_inflammation/ga_outputs/merged_result_seed{seed}.json'
+out_dir = Path(f'/mnt/sda/bio_drug_corpus/AIpep/{task_name}/ga_outputs')
+out_file = out_dir / f'merged_result_seed{seed}.json'
 
 
 def merge_and_copy():

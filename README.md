@@ -4,7 +4,8 @@ To install the required environment run:
 > conda activate pdga
 
 Modify the run.py file and run it giving a seed as argument 
-> python run.py 0
+> sh run.sh, where is actually python run.py  
+> Then python projects/wound_heal/merge_generated_seq.py
 
 In this implementation you can use the MAP4 fingerprint or the RDKit AP fingerprint
 
@@ -13,6 +14,4 @@ Each run will create a folder (named according to the query name and the used se
 - another containing all sequences below the defined threshold.
 
 For more results run the algorithm with different random seeds.
-
 To read the output you can use the jupyter notebook in this folder.
-
