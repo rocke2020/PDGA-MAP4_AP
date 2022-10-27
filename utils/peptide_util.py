@@ -68,9 +68,9 @@ basic_aa_3chars_to_1chars = {
 }
 
 
-often_AMP_aminoacids = basic_aminoacids.copy()
-# Non-containing methionine sequences were preferred. Methionine，简写M，Met, 甲硫氨酸, for diversity, not used in codes.
-often_AMP_aminoacids.remove('M')
+## Non-containing methionine sequences were preferred. Methionine，简写M，Met, 甲硫氨酸, for diversity, not used in codes.
+# often_AMP_aminoacids = basic_aminoacids.copy()
+# often_AMP_aminoacids.remove('M')
 C_TERMINUS = "cTerminus"
 N_TERMINUS = "nTerminus"
 LEAST_SEQ_LENGTH = 4
@@ -173,8 +173,9 @@ def is_valid_terminus(n_name, c_name):
 
 
 if __name__ == "__main__":
-    basic_aa_3chars_to_1chars = {}
-    for k, v in basic_aa_1chars_to_3chars.items():
-            basic_aa_3chars_to_1chars[v] = k
-    with open('1.json', 'w', encoding='utf-8') as f:
-        json.dump(basic_aa_3chars_to_1chars, f, ensure_ascii=False, indent=4)
+    # basic_aa_3chars_to_1chars = {}
+    # for k, v in basic_aa_1chars_to_3chars.items():
+    #         basic_aa_3chars_to_1chars[v] = k
+    # with open('1.json', 'w', encoding='utf-8') as f:
+    #     json.dump(basic_aa_3chars_to_1chars, f, ensure_ascii=False, indent=4)
+    print(len(basic_aminoacids))

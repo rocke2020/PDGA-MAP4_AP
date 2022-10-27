@@ -6,7 +6,7 @@ class SequenceGenerator:
     def __init__(self, verbose=False):
             # variables for random generation of dendrimers
             self.AA4rndm = basic_aminoacids
-            self.min_aa_no = 5
+            self.min_aa_no = 3
             self.max_aa_no = 15
 
             self.verbose = verbose
