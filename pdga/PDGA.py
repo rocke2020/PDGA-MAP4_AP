@@ -7,11 +7,7 @@ from . import mutations
 from . import sequence
 from . import utils
 from .sequence_random_generator import SequenceGenerator
-from utils.log_util import get_logger
-import logging
-
-
-logger = get_logger(name=__name__, log_file='run.log', log_level=logging.DEBUG)
+from utils.log_util import logger
 
 
 class PDGA:
