@@ -7,7 +7,7 @@ from multiprocessing import Pool
 from utils.file_util import FileUtil
 
 
-seed = 0
+seed = 1
 task_name = 'cpp_peptides'
 postfix = '_3chars_seq'
 orig_filename = 'FGF'
@@ -42,7 +42,7 @@ def run_one_peptide(peptied_num=0):
                 distancefn=distancefn,
                 query_name=query_name, peptied_num=peptied_num, similar_num = similar_num_per_seq,
                 is_peptide_sequence=True,
-                verbose=True, seed=seed)
+                verbose=False, seed=seed)
 
     ga.write_param()
     logger.info(f'Starts peptied_num {peptied_num} ......')

@@ -288,16 +288,16 @@ def write_progress(path, dist_dict, gen_n, jd_av, jd_min ):
     """add gen number, gen sequences and its jd av and min
     TODO puts distance ahead of generated seqs to fastly know the change of ditance during each epoch.
     """
-    gen_temp = []
     gen = list(dist_dict.keys())
-    for seq in gen:
-        gen_temp.append(sequence.reinterprete(seq))
-    gen = ';'.join(gen_temp)
+    # gen_temp = []
+    # for seq in gen:
+    #     gen_temp.append(sequence.reinterprete(seq))
+    gen = ';'.join(gen)
     with open(path , 'a') as outFile:
         outFile.write(str(gen_n) + ' ' + gen + ' ' + str(jd_av) + ' ' + str(jd_min) + '\n')
 
 
-def write_results(path, smiles, seq, map4, jd):
+def write_results(path, smiles, seq, jd):
     """if jd from query is smaller than similarity treshold
         (class variable), adds seq to results
     """

@@ -68,7 +68,7 @@ class PDGA:
         if seed is None:
             seed = np.random.randint(100000000)
             if verbose:
-                print("Use seed:",seed)
+                logger.info("Use seed: %s", seed)
         self.seed = seed
         utils.set_seed(seed=seed)
 
@@ -91,7 +91,6 @@ class PDGA:
         Returns:
             precessed sesq, fps, smiles, props {lists} -- processed sequences and the relative map4
         """
-
         proc_seqs = []
         smiles = []
         mol_list = []
@@ -113,7 +112,7 @@ class PDGA:
                 smi = Chem.MolToSmiles(mol, isomericSmiles = False)
                 mol = Chem.MolFromSmiles(smi)
             else:
-                print("Invalid mol", seq, smi)
+                logger.info("Invalid mol seq %s, smi %s", seq, smi)
                 continue
 
             proc_seqs.append(seq)
@@ -149,7 +148,7 @@ class PDGA:
             smiles = smiles_l[i]
             distance = self.distancefn(self.query_fp, map4)
             if distance <= self.sim_treshold:
-                utils.write_results(self.results_path, smiles, seq, map4, distance)
+                utils.write_results(self.results_path, smiles, seq, distance)
             dist_dict[seq] = distance
 
         survival_dict = {}
@@ -189,7 +188,7 @@ class PDGA:
                 return wholives
             else:
                 if self.verbose:
-                    print('not valid selection strategy, type has to be "Elitist", or "Pure"')
+                    logger.info('not valid selection strategy, type has to be "Elitist", or "Pure"')
 
     def pick_parents(self, surv_dict):
         """Picks two sequences according to their survival probabilities
@@ -213,9 +212,7 @@ class PDGA:
         Returns:
             list -- new generation
         """
-
         new_gen = []
-
         for i in range(int(self.pop_size * self.rndm_newgen_fract)):
             new_gen.append(self.sequence_rng.generate())
 
@@ -257,7 +254,7 @@ class PDGA:
         seconds = int(timelimit[2])
         self.timelimit_seconds = int(seconds + minutes * 60 + hours * 3600)
         if self.verbose:
-            print('The GA will stop after', timelimit[0], 'hours,', timelimit[1], 'minutes, and', timelimit[2],
+            logger.info('The GA will stop after', timelimit[0], 'hours,', timelimit[1], 'minutes, and', timelimit[2],
                   'seconds')
 
     def get_similar_count(self):
@@ -280,12 +277,12 @@ class PDGA:
             gen, cached_dist_to_skip_calculation=None)
 
         if self.verbose:
-            print('Average distance =', distance_av, 'Minimum distance =', distance_min)
+            logger.info('Average distance = %s, Minumum distance = %s', distance_av, distance_min)
 
         # progress file update (generations and their 
         # average and minimum distance from query): 
         
-        utils.write_progress(self.output_path, dist_dict, self.epoch, distance_av, distance_min)
+        # utils.write_progress(self.output_path, dist_dict, self.epoch, distance_av, distance_min)
 
         time_passed = int(time.time() - startTime)
 
@@ -302,7 +299,7 @@ class PDGA:
         while 1:
             # if self.timelimit_seconds is not None and time_passed > self.timelimit_seconds:
             #     if self.verbose:
-            #         print('time limit reached')
+            #         logger.info('time limit reached')
             #     break
 
             # the sequences to be kept intact are chosen:
@@ -321,20 +318,19 @@ class PDGA:
 
             # if self.verbose:
             #     for s in utils.random_subset(gen, 5, seed=self.seed):
-            #         print(f"Generated Sequence:  {sequence.reinterprete(s)}")
+            #         logger.info(f"Generated Sequence:  {sequence.reinterprete(s)}")
 
             # fitness function and survival 
             # probability attribution:
             distance_av, distance_min, dist_dict, surv_dict = self.fitness_function(gen, cached_dist_to_skip_calculation=dist_dict)
             if self.verbose:
-                print('Average distance =', distance_av, 'Minumum distance =', distance_min)
+                logger.info('Average distance = %s, Minumum distance = %s', distance_av, distance_min)
 
             # progress file update (generations and their 
             # average and minimum distance from query): 
-            utils.write_progress(self.output_path, dist_dict, self.epoch, distance_av, distance_min)
+            # utils.write_progress(self.output_path, dist_dict, self.epoch, distance_av, distance_min)
 
             time_passed = int(time.time() - startTime)
-
             # updates generation number (class variable):
             self.epoch += 1
 

@@ -9,6 +9,9 @@ sys.path.append(os.path.abspath('.'))
 from utils.peptide_util import basic_aa_3chars_to_1chars
 from utils.file_util import FileUtil
 from utils.log_util import logger
+from icecream import ic
+ic.configureOutput(includeContext=True, argToStringFunction=lambda _: str(_))
+ic.lineWrapWidth = 120
 
 
 task_name = 'cpp_peptides'  # anti_inflammation wound_heal
@@ -37,8 +40,8 @@ def merge_and_copy():
                         _chars = [basic_aa_3chars_to_1chars[char] for char in chars]
                         sequences.append(''.join(_chars))
     sequences = list(set(sequences))
-    print(result_files_count)
-    print(len(sequences))
+    ic(result_files_count)
+    ic(len(sequences))
     df = DataFrame({'Sequence': sequences})
     df['len'] = df['Sequence'].map(len)
     logger.info('%s', df['len'].describe())
