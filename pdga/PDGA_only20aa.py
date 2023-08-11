@@ -7,17 +7,20 @@ from . import mutations
 from . import sequence
 from . import utils
 from .sequence_random_generator_only20aa import SequenceGenerator
-from utils.log_util import get_logger
-import logging
-
-
-logger = get_logger(name=__name__, log_file='run.log', log_level=logging.DEBUG)
+from utils.log_util import logger
 
 
 class PDGA:
     def __init__(self, pop_size, mut_rate, gen_gap, query, sim_treshold, porpouse, folder, 
-         fingerprintfn, distancefn, query_name, peptied_num, similar_num, is_peptide_sequence=True, methyl=False, 
+         fingerprintfn, distancefn, query_name, peptied_num, similar_num, 
+         is_peptide_sequence=True, 
+         methyl=False, 
          verbose=False, seed=None):
+        """ 
+        Only focus on linear.
+        
+        methyl, only used in cyclic. To avoid the possibility of metylation of the amide bond methyl to False 
+        """
         self.pop_size = pop_size
         self.mut_rate = mut_rate
         self.gen_gap = gen_gap
@@ -273,7 +276,8 @@ class PDGA:
         gen = self.rndm_gen()
 
         # fitness function and survival probability attribution:
-        distance_av, distance_min, dist_dict, surv_dict = self.fitness_function(gen, cached_dist_to_skip_calculation=None)
+        distance_av, distance_min, dist_dict, surv_dict = self.fitness_function(
+            gen, cached_dist_to_skip_calculation=None)
 
         if self.verbose:
             print('Average distance =', distance_av, 'Minimum distance =', distance_min)
@@ -342,7 +346,7 @@ class PDGA:
 
             if similar_num >= self.similar_num:
                 logger.info(
-                    f'peptied_num {self.peptied_num} sim_num {similar_num} finishes at epoch {self.epoch}')
+                    f'peptied_num {self.peptied_num} similar_num {similar_num} finishes at epoch {self.epoch}')
                 return
 
             # if query is found updates found identity count (class variable) 

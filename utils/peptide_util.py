@@ -6,7 +6,7 @@ import os, sys
 sys.path.append(os.path.abspath('.'))
 
 
-# 20 natrual 
+# 20 natrual
 basic_aminoacids = ["A","C","D","E","F","G","H","I","L","M","N","P","K","Q","R","S","T","V","W","Y"]
 multi_chars_to_single_char_dict = {
     'Arg': 'R', 'His': 'H', 'Lys': 'K', 'Asp': 'D', 'Glu': 'E', 'Ser': 'S', 'Thr': 'T', 'Asn': 'N',
@@ -124,13 +124,13 @@ def float_ignore_plus_minus(mynumber):
 
 
 def check_active(unit, concentration):
-    if ((unit == "µM" and concentration < 10) or (unit == "nM" and concentration < 10000) 
+    if ((unit == "µM" and concentration < 10) or (unit == "nM" and concentration < 10000)
         or (unit == "µg/ml" and concentration < 32)):
         return True
-    
+
 
 def check_inactive(unit, concentration):
-    if ((unit == "µM" and concentration > 10) or (unit == "nM" and concentration > 10000) 
+    if ((unit == "µM" and concentration > 10) or (unit == "nM" and concentration > 10000)
         or (unit == "µg/ml" and concentration > 32)):
         return True
 
@@ -150,7 +150,7 @@ def convert_2d_values_to_row_col(input_s:Series):
     s = input_s.apply(Series, 1).stack()
     s.index = s.index.droplevel(-1)
     out = s.apply(lambda x: Series(x))
-    return out        
+    return out
 
 
 def get_terminus_names(dbaasp_peptide):
@@ -170,6 +170,19 @@ def get_terminus_names(dbaasp_peptide):
 def is_valid_terminus(n_name, c_name):
     if (n_name == 'nan' or n_name == 'ACT') and (c_name == 'nan' or c_name == 'AMD'):
         return True
+
+
+def convert_to_3_chars(sequences, out_file):
+    """  """
+    new_seqs = []
+    for seq in sequences:
+        chars = []
+        for char in seq:
+            chars.append(basic_aa_1chars_to_3chars[char])
+        new_seqs.append('-'.join(chars))
+    with open(out_file, 'w', encoding='utf-8') as f:
+        for seq in new_seqs:
+            f.write(seq+'\n')
 
 
 if __name__ == "__main__":

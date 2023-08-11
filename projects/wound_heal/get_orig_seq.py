@@ -4,7 +4,7 @@ import pickle
 import json
 import os, sys, shutil
 sys.path.append(os.path.abspath('.'))
-from utils.peptide_util import basic_aa_1chars_to_3chars
+from utils.peptide_util import convert_to_3_chars
 
 
 file = '/home/qcdong/codes/MultiPep/APD3_data/woundheal.txt'
@@ -23,15 +23,4 @@ with open('projects/wound_heal/orig_data/orig_seq_1char.txt', 'w', encoding='utf
         f.write(f'{seq}\n')
 
 
-def convert_to_3_chars(sequences):
-    new_seqs = []
-    for seq in sequences:
-        chars = []
-        for char in seq:
-            chars.append(basic_aa_1chars_to_3chars[char])
-        new_seqs.append('-'.join(chars))
-    with open('projects/wound_heal/orig_data/orig_seq_3char.json', 'w', encoding='utf-8') as f:
-        json.dump(new_seqs, f, ensure_ascii=False, indent=4)
-
-
-convert_to_3_chars(sequences)
+convert_to_3_chars(sequences, 'projects/wound_heal/orig_data/orig_seq_3char.json')

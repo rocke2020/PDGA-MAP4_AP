@@ -1,0 +1,8 @@
+Arg-Arg-Pro-Ser-Leu
+Arg-Gln-Glu-Thr-Val
+Arg-Ala-Ile-Thr-Ile
+Gln-Arg-Arg-Pro-Ser-Leu-Lys-Ser-Leu
+Gln-Arg-Ala-Ile-Thr-Ile-Leu-Asp-Thr
+Met-His-Arg-Gln-Glu-Thr-Val-Asp-Cys
+Leu-Lys-Lys-Phe-Asn-Ala-Arg-Arg-Lys-Leu
+Lys-Phe-Asn-Ala-Arg

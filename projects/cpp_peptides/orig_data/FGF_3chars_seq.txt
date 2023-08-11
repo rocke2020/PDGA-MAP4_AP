@@ -1,0 +1,16 @@
+Arg-Asp-Leu-Leu-Ile-Asp-Glu
+Asp-Leu-Leu-Ile-Asp-Glu-Trp
+Glu-Glu-Phe-Asn-Asp-Val-Tyr
+Asn-Glu-Asp-Cys-Glu-Leu-Lys
+Asp-Asp-Glu-Met-Thr-Gly-Tyr
+Tyr-His-Asp-Pro-Asp-Asp-Glu
+Leu-Glu-Glu-Phe-Asn-Asp-Val
+Glu-Asp-Cys-Glu-Leu-Lys-Ile
+Gln-Lys-Leu-Thr-Asp-Asp-His
+Ser-Leu-Glu-Glu-Phe-Asn-Asp
+Leu-Leu-Ile-Asp-Glu-Trp-Lys
+Ile-Glu-Ala-Leu-Asp-Lys-Tyr
+Glu-Phe-Asn-Asp-Val-Tyr-Leu
+Ala-Arg-Ser-Leu-Glu-Glu-Phe
+Arg-His-Thr-Asp-Asp-Glu-Met
+Glu-Lys-Met-Leu-Val-Leu-Asp
