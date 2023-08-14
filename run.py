@@ -15,7 +15,7 @@ filename = f'{orig_filename}{postfix}'
 query_sequences_file = f'projects/{task_name}/orig_data/{filename}.txt'
 query_sequences = FileUtil.read_raw_text(query_sequences_file)
 
-total_similar_num = 10_000_000
+total_similar_num = 5_000_000
 similar_num_per_seq = total_similar_num // len(query_sequences) + 1
 logger.info(f'similar_num_per_seq {similar_num_per_seq}')
 # query_smiles = "C[C@H]1CCC[C@@H]2[C@H](CC(/C(C)=C/C3=CSC(C)=N3)OC(C[C@H](O)C(C)(C)C([C@H](C)[C@H]1O)=O)=O)O2"
@@ -43,7 +43,6 @@ def run_one_peptide(peptied_num=0):
                 query_name=query_name, peptied_num=peptied_num, similar_num = similar_num_per_seq,
                 is_peptide_sequence=True,
                 verbose=False, seed=seed)
-
     ga.write_param()
     logger.info(f'Starts peptied_num {peptied_num} ......')
     ga.run()

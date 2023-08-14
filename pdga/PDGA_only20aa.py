@@ -31,6 +31,7 @@ class PDGA:
         if not os.path.exists(folder):
             os.makedirs(folder)
         self.folder = folder
+        # Converts 3char_as_aa to 1 char as aa.
         if is_peptide_sequence:
             self.query = sequence.interprete(query)
         else:
@@ -297,11 +298,6 @@ class PDGA:
         # default: GA runs for ten more generation after the query is found.
         # while distance_min != 0 or found_identity <= 10:
         while 1:
-            # if self.timelimit_seconds is not None and time_passed > self.timelimit_seconds:
-            #     if self.verbose:
-            #         logger.info('time limit reached')
-            #     break
-
             # the sequences to be kept intact are chosen:
             survivors = self.who_lives(surv_dict)
 

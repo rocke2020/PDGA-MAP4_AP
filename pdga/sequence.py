@@ -1,6 +1,8 @@
 from rdkit.Chem import rdmolfiles
 from . import utils
 import random 
+from utils.log_util import logger
+
 
 # len 8
 B_SMILES = {'1': '[N:2][C@@H](C[N:2])[C:1](O)=O', '2': '[N:2][C@@H](CC[N:2])[C:1](O)=O',

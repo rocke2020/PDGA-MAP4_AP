@@ -144,8 +144,7 @@ def mutate_branching_point(seq, mut_n=1):
     return mutations
 
 
-
-def mutation_deletion(gen, mut_rate):
+def mutation_deletion(gen: list[str], mut_rate):
     gen_tmp = []
     seq_deletion = np.random.choice(gen, int(round(len(gen) * mut_rate, 0)), replace=False)
     for seq in gen:
