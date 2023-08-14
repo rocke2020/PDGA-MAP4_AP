@@ -5,7 +5,7 @@ from utils.peptide_util import convert_to_3_chars
 from utils.file_util import FileUtil
 
 
-orig_data_dir = Path('projects/cpp_peptides/orig_data')
+orig_data_dir = Path('projects/Adiponectin_peptide_affinity_test/orig_data')
 postfix = '_3chars_seq'
 
 for file in orig_data_dir.glob('*.txt'):

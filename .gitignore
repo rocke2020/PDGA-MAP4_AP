@@ -1,11 +1,6 @@
-Old/
-other_data/
-terpenome/
-plots/
-NPAtlas/
-anticancers/
 EpothilonA_*/
 results/
+projects/**/*.txt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

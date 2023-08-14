@@ -8,9 +8,9 @@ from utils.file_util import FileUtil
 
 
 seed = 1
-task_name = 'cpp_peptides'
+task_name = 'Adiponectin_peptide_affinity_test'
 postfix = '_3chars_seq'
-orig_filename = 'FGF'
+orig_filename = 'GST'
 filename = f'{orig_filename}{postfix}'
 query_sequences_file = f'projects/{task_name}/orig_data/{filename}.txt'
 query_sequences = FileUtil.read_raw_text(query_sequences_file)
