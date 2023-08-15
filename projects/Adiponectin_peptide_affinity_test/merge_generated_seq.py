@@ -13,11 +13,12 @@ from icecream import ic
 ic.configureOutput(includeContext=True, argToStringFunction=lambda _: str(_))
 ic.lineWrapWidth = 120
 
-
-task_name = 'cpp_peptides'  # anti_inflammation wound_heal
+# Notice to modify the task name which is the input!!
+task_name = 'Adiponectin_peptide_affinity_test'  # anti_inflammation wound_heal
 result_dir = Path(f'results/{task_name}')
-root_dir = Path(f'/mnt/sda/bio_drug_corpus/peptides/Adiponectin peptide affinity test/ga_outputs')
 
+# Output
+root_dir = Path(f'/mnt/sda/bio_drug_corpus/peptides/Adiponectin peptide affinity test/ga_outputs')
 orig_filename = 'GST'
 out_dir = root_dir / orig_filename
 out_file = out_dir / f'merged_genetic_algorithm_result.txt'
@@ -28,7 +29,7 @@ max_len = 10
 
 def merge_and_copy():
     """
-    443 valid length among orig 1000 target where 693 unique ones.
+    seed 1, Valid length seq num 2,589,320 from 5M
     """
     result_files_count = 0
     sequences = []
