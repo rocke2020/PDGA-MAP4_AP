@@ -14,7 +14,7 @@ ic.configureOutput(includeContext=True, argToStringFunction=lambda _: str(_))
 ic.lineWrapWidth = 120
 
 
-task_name = 'cpp_peptides'  # anti_inflammation wound_heal
+task_name = 'Adiponectin_peptide_affinity_test'  # anti_inflammation wound_heal
 result_dir = Path(f'results/{task_name}')
 root_dir = Path(f'/mnt/sda/bio_drug_corpus/peptides/Adiponectin peptide affinity test/ga_outputs')
 
