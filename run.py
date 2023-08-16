@@ -15,6 +15,11 @@ filename = f'{orig_filename}{postfix}'
 query_sequences_file = f'projects/{task_name}/orig_data/{filename}.txt'
 query_sequences = FileUtil.read_raw_text(query_sequences_file)
 
+single_char_seqs = FileUtil.read_raw_text(f'projects/{task_name}/orig_data/{orig_filename}.txt')
+# To track the codes to check mistakes on input files.
+logger.info('query_sequences_file %s', query_sequences_file)
+logger.info(f'seed {seed}, single_char_seqs[:5] {single_char_seqs[:5]}')
+
 total_similar_num = 5_000_000
 similar_num_per_seq = total_similar_num // len(query_sequences) + 1
 logger.info(f'similar_num_per_seq {similar_num_per_seq}')

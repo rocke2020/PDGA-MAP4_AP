@@ -20,7 +20,8 @@ result_dir = Path(f'results/{task_name}')
 # Output
 root_dir = Path(f'/mnt/sda/bio_drug_corpus/peptides/Adiponectin peptide affinity test/ga_outputs')
 orig_filename = 'GST'
-out_dir = root_dir / orig_filename
+seed = 0
+out_dir = root_dir / orig_filename / f'seed{seed}'
 out_file = out_dir / f'merged_genetic_algorithm_result.txt'
 out_dir.mkdir(exist_ok=1, parents=1)
 min_len = 5
@@ -34,6 +35,8 @@ def merge_and_copy():
     result_files_count = 0
     sequences = []
     for _dir in result_dir.iterdir():
+        seed_in_dir_name = _dir.name.split('_')[-1]
+        assert seed_in_dir_name == f'seed{seed}'
         for result_file in _dir.iterdir():
             if result_file.name.endswith('results'):
                 result_files_count += 1
