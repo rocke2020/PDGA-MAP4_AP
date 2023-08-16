@@ -16,13 +16,14 @@ ic.lineWrapWidth = 120
 
 task_name = 'cpp_peptides'  # anti_inflammation wound_heal
 result_dir = Path(f'results/{task_name}')
-seed = 1
-root_dir = Path(f'/mnt/sda/bio_drug_corpus/AIpep/cell_penetrating/ga_outputs')
 
-orig_filename = 'FGF'
+root_dir = Path(f'/mnt/sda/bio_drug_corpus/AIpep/cell_penetrating/ga_outputs')
+seed = 1
+orig_filename = 'mc1r'
 out_dir = root_dir / orig_filename
 out_file = out_dir / f'merged_result_seed{seed}.txt'
 out_dir.mkdir(exist_ok=1, parents=1)
+
 min_len = 5
 max_len = 10
 

@@ -1,6 +1,6 @@
 from pdga.PDGA_only20aa import PDGA
 from pdga import get_ap_distancefn, get_ap_fingerprintfn
-import sys, json
+import sys, json, shutil
 import numpy as np
 from utils.log_util import logger
 from multiprocessing import Pool
@@ -8,9 +8,9 @@ from utils.file_util import FileUtil
 
 
 seed = 1
-task_name = 'Adiponectin_peptide_affinity_test'
+task_name = 'cpp_peptides'
 postfix = '_3chars_seq'
-orig_filename = 'GST'
+orig_filename = 'mc1r'
 filename = f'{orig_filename}{postfix}'
 query_sequences_file = f'projects/{task_name}/orig_data/{filename}.txt'
 query_sequences = FileUtil.read_raw_text(query_sequences_file)
@@ -18,9 +18,9 @@ query_sequences = FileUtil.read_raw_text(query_sequences_file)
 single_char_seqs = FileUtil.read_raw_text(f'projects/{task_name}/orig_data/{orig_filename}.txt')
 # To track the codes to check mistakes on input files.
 logger.info('query_sequences_file %s', query_sequences_file)
-logger.info(f'seed {seed}, single_char_seqs[:5] {single_char_seqs[:5]}')
+logger.info(f'seed {seed}, seqs num {len(single_char_seqs)}, single_char_seqs[:5] {single_char_seqs[:5]}')
 
-total_similar_num = 5_000_000
+total_similar_num = 6_000_000
 similar_num_per_seq = total_similar_num // len(query_sequences) + 1
 logger.info(f'similar_num_per_seq {similar_num_per_seq}')
 # query_smiles = "C[C@H]1CCC[C@@H]2[C@H](CC(/C(C)=C/C3=CSC(C)=N3)OC(C[C@H](O)C(C)(C)C([C@H](C)[C@H]1O)=O)=O)O2"
@@ -55,6 +55,9 @@ def run_one_peptide(peptied_num=0):
 
 if __name__ == "__main__":
     # run_one_peptide()
+    clean_all_files_in_task_result_dir = 1
+    if clean_all_files_in_task_result_dir:
+        shutil.rmtree(f"./results/{task_name}", ignore_errors=False)
     with Pool(24) as pool:
         for i in pool.imap_unordered(run_one_peptide, range(len(query_sequences))):
             pass

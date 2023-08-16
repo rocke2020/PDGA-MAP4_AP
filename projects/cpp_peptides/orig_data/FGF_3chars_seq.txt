@@ -1,3 +1,7 @@
-Glu-Glu-Ile-Trp-Thr-Met-Leu
-Glu-Met-Ala-Glu-Tyr-Met-Tyr
-Asp-Met-Ala-Glu-Tyr-Met-Tyr
+Cys-Tyr-Gly-Leu-Pro-Phe-Thr-Arg-Cys
+Cys-Glu-Glu-Ile-Trp-Thr-Met-Leu-Cys
+Cys-Trp-Ala-Leu-Thr-Val-Lys-Thr-Cys
+Cys-Leu-Thr-Val-Leu-Trp-Thr-Thr-Cys
+Cys-Thr-Leu-Trp-Asn-Arg-Ser-Pro-Cys
+Cys-His-Tyr-Leu-Leu-Thr-Asn-Tyr-Cys
+Cys-Arg-Ile-His-Leu-Ala-His-Lys-Cys

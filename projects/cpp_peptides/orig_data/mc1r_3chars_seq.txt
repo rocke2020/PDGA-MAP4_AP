@@ -1,0 +1,4 @@
+Ser-Tyr-Ser-Met-Glu-His-Phe-Arg-Trp-Gly-Lys-Pro-Val
+Tyr-Val-Met-Gly-His-Phe-Arg-Trp-Asp-Arg-Phe
+Ser-Tyr-Ser-Leu-Glu-His-Phe-Arg-Trp-Gly-Lys-Pro-Val
+Arg-Phe-Trp-Gly-Lys
