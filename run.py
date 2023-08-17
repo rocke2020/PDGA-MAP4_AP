@@ -10,7 +10,7 @@ from utils.file_util import FileUtil
 seed = 1
 task_name = 'cpp_peptides'
 postfix = '_3chars_seq'
-orig_filename = 'mc1r'
+orig_filename = 'FGF'
 filename = f'{orig_filename}{postfix}'
 query_sequences_file = f'projects/{task_name}/orig_data/{filename}.txt'
 query_sequences = FileUtil.read_raw_text(query_sequences_file)
@@ -20,9 +20,9 @@ single_char_seqs = FileUtil.read_raw_text(f'projects/{task_name}/orig_data/{orig
 logger.info('query_sequences_file %s', query_sequences_file)
 logger.info(f'seed {seed}, seqs num {len(single_char_seqs)}, single_char_seqs[:5] {single_char_seqs[:5]}')
 
-total_similar_num = 6_000_000
-similar_num_per_seq = total_similar_num // len(query_sequences) + 1
-logger.info(f'similar_num_per_seq {similar_num_per_seq}')
+total_target_num = 6_000_000
+targt_num_per_seq = total_target_num // len(query_sequences) + 1
+logger.info(f'targt_num_per_seq {targt_num_per_seq}')
 # query_smiles = "C[C@H]1CCC[C@@H]2[C@H](CC(/C(C)=C/C3=CSC(C)=N3)OC(C[C@H](O)C(C)(C)C([C@H](C)[C@H]1O)=O)=O)O2"
 # query_name = "EpothilonA"
 
@@ -45,7 +45,7 @@ def run_one_peptide(peptied_num=0):
                 porpouse="linear", folder=f"results/{task_name}/{query_name}_seed{seed}",
                 fingerprintfn=fingerprintfn,
                 distancefn=distancefn,
-                query_name=query_name, peptied_num=peptied_num, similar_num = similar_num_per_seq,
+                query_name=query_name, peptied_num=peptied_num, similar_num = targt_num_per_seq,
                 is_peptide_sequence=True,
                 verbose=False, seed=seed)
     ga.write_param()

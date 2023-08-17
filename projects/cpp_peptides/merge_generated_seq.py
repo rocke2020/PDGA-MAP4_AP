@@ -19,10 +19,11 @@ result_dir = Path(f'results/{task_name}')
 
 root_dir = Path(f'/mnt/sda/bio_drug_corpus/AIpep/cell_penetrating/ga_outputs')
 seed = 1
-orig_filename = 'mc1r'
+orig_filename = 'FGF'
 out_dir = root_dir / orig_filename
 out_file = out_dir / f'merged_result_seed{seed}.txt'
 out_dir.mkdir(exist_ok=1, parents=1)
+seed_seqs_file = f'projects/{task_name}/orig_data/{orig_filename}.txt'
 
 min_len = 5
 max_len = 10
@@ -30,7 +31,6 @@ max_len = 10
 
 def merge_and_copy():
     """
-    443 valid length among orig 1000 target where 693 unique ones.
     """
     result_files_count = 0
     sequences = []
@@ -55,6 +55,7 @@ def merge_and_copy():
     logger.info('Valid length seq num %s', len(sequences))
     FileUtil.write_raw_text(sequences, out_file)
     shutil.copyfile(result_dir / f'{task_name}_0_seed{seed}/param.txt', out_dir / f'param_seed{seed}.txt')
+    shutil.copyfile(seed_seqs_file, out_dir / f'{orig_filename}_seed_seqs.txt')
 
 
 if __name__ == "__main__":
