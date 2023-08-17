@@ -1,5 +1,5 @@
-from pdga import PDGA
-from pdga import get_map4_distancefn, get_map4_fingerprintfn, get_ap_distancefn, get_ap_fingerprintfn
+from genetic_algorithm import PDGA
+from genetic_algorithm import get_map4_distancefn, get_map4_fingerprintfn, get_ap_distancefn, get_ap_fingerprintfn
 import sys
 import numpy as np
 from utils.log_util import logger

@@ -1,11 +1,10 @@
 import random 
-from utils.peptide_util import basic_aminoacids
 
 
 class SequenceGenerator:
     def __init__(self, verbose=False):
             # variables for random generation of dendrimers
-            self.AA4rndm = basic_aminoacids
+            self.AA4rndm = ["A","C","D","E","F","G","H","I","L","M","N","P","K","Q","R","S","T","V","W","Y"]
             self.min_aa_no = 4
             self.max_aa_no = 15
 
