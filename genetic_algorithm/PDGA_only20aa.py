@@ -3,10 +3,10 @@ import time
 import numpy as np
 from rdkit import Chem
 from pathlib import Path
-from ..genetic_algorithm import mutations
-from ..genetic_algorithm import sequence
-from ..genetic_algorithm import utils
-from ..genetic_algorithm.sequence_random_generator_only20aa import SequenceGenerator
+from genetic_algorithm import mutations
+from genetic_algorithm import sequence
+from genetic_algorithm import utils
+from genetic_algorithm.sequence_random_generator_only20aa import SequenceGenerator
 from utils.log_util import logger
 
 

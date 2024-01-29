@@ -17,7 +17,7 @@ distancefn = get_ap_distancefn()
 postfix = '_3chars_seq'
 
 
-def convert_to_3chars_seqs(input_file):
+def convert_to_3chars_seqs(input_file: Path):
     """  """
     if input_file.is_file():
         sequences = FileUtil.read_raw_text(input_file)
@@ -25,7 +25,7 @@ def convert_to_3chars_seqs(input_file):
         query_sequences = convert_to_3_chars(sequences, input_file.parent / f'{input_file.stem}{postfix}.txt')
     else:
         logger.info('%s is not existent as a file', input_file)
-        raise Exception()
+        raise FileNotFoundError(f"{input_file} is not existent as a file")
     return query_sequences
 
 

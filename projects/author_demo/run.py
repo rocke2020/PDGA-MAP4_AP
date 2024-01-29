@@ -1,3 +1,6 @@
+
+import os, sys
+sys.path.append(os.path.abspath('.'))
 from genetic_algorithm import PDGA
 from genetic_algorithm import get_map4_distancefn, get_map4_fingerprintfn, get_ap_distancefn, get_ap_fingerprintfn
 import sys
